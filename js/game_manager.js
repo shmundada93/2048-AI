@@ -17,7 +17,7 @@ function GameManager(size, InputManager, Actuator, StorageManager,ai) {
 // autoplay the game
 
 GameManager.prototype.autoplay = function() {
-  x = this.AI.naiveagent(this.serialize());
+  x = this.AI.aiagent(this.serialize());
   this.move(x);
   };
   

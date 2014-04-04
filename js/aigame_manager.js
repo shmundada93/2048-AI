@@ -31,10 +31,20 @@ AIGameManager.prototype.setup = function () {
 };
 
 // Adds a tile in a random position
+
 AIGameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value = Math.random() < 0.9 ? 2 : 4;
     var tile = new Tile(this.grid.randomAvailableCell(), value);
+
+    this.grid.insertTile(tile);
+  }
+};
+
+AIGameManager.prototype.addTile = function (cell , x) {
+  if (this.grid.cellsAvailable()) {
+
+    var tile = new Tile(cell, x);
 
     this.grid.insertTile(tile);
   }
@@ -120,10 +130,8 @@ AIGameManager.prototype.move = function (direction) {
       }
     });
   });
-
   if (moved) {
     this.addRandomTile();
-
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }

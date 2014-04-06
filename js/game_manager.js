@@ -5,11 +5,12 @@ function GameManager(size, InputManager, Actuator, StorageManager,ai) {
   this.actuator       = new Actuator;
   this.AI             = new ai;
   this.startTiles     = 2;
-
+  this.auto = false;
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   this.inputManager.on("autoplay",this.autoplay.bind(this));
+  this.inputManager.on("stopautoplay",this.stopautoplay.bind(this));
   this.setup();
 }
 
@@ -17,9 +18,23 @@ function GameManager(size, InputManager, Actuator, StorageManager,ai) {
 // autoplay the game
 
 GameManager.prototype.autoplay = function() {
-  x = this.AI.aiagent(this.serialize());
+  this.auto = true;
+  var x = this.AI.aiagent(this.serialize());
   this.move(x);
+  // var timeout = animationDelay;
+  // if(this.won == false && this.over == false && this.auto == true)
+  // {
+  // var self = this;
+  //   setTimeout(function(){
+  //     self.autoplay();
+  //   }, timeout);
+  // }
   };
+
+GameManager.prototype.stopautoplay = function() {
+  this.auto = false;
+  };
+
   
 // Restart the game
 GameManager.prototype.restart = function () {
@@ -282,3 +297,5 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+

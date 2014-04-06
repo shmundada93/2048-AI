@@ -12,6 +12,7 @@ function KeyboardInputManager() {
     this.eventTouchend      = "touchend";
   }
 
+  this.auto = false;
   this.listen();
 }
 
@@ -67,10 +68,21 @@ KeyboardInputManager.prototype.listen = function () {
       self.restart.call(self, event);
     }
 	
-	if (!modifiers && event.which === 32) {
-      self.autoplay.call(self, event);
+	if ((!modifiers && event.which === 32)) {
+    //for(i=0;i<10;i++)
+    //{
+    this.auto = true;
+    self.autoplay.call(self, event);
+    //}
     }
+
+  if (!modifiers && event.which === 27) {
+      this.auto = false;
+      self.stopautoplay.call(self, event);
+    }
+
   });
+
 
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
@@ -138,7 +150,14 @@ KeyboardInputManager.prototype.restart = function (event) {
 
 KeyboardInputManager.prototype.autoplay = function (event) {
   event.preventDefault();
+  // this.auto = true;
   this.emit("autoplay");
+};
+
+KeyboardInputManager.prototype.stopautoplay = function (event) {
+event.preventDefault();
+//   this.auto = false;
+  this.emit("stopautoplay");
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {

@@ -135,8 +135,9 @@ AIGameManager.prototype.move = function (direction) {
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }
-
+    this.validmove = true;
   }
+
 };
 
 // Get the vector representing the chosen direction
